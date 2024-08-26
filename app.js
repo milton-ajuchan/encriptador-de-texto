@@ -1,4 +1,5 @@
 document.getElementById('input-text').addEventListener('input', function() {
+  this.value = this.value.toLowerCase().replace(/[^a-z\s]/g, '');
   document.getElementById('imagen-2').style.display = 'none';
   document.querySelector('.texto-encriptados').style.display = 'none';
 });
@@ -13,6 +14,19 @@ document.getElementById('desencriptar').addEventListener('click', function() {
   const inputText = document.getElementById('input-text').value;
   const decryptedText = desencriptar(inputText);
   mostrarResultado(decryptedText);
+});
+
+document.getElementById('input-text').addEventListener('keypress', function(event) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    if (document.activeElement === document.getElementById('input-text')) {
+      if (event.shiftKey) {
+        document.getElementById('desencriptar').click();
+      } else {
+        document.getElementById('encriptar').click();
+      }
+    }
+  }
 });
 
 function encriptar(texto) {
